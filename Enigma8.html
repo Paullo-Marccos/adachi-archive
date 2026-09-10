@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+					<meta name="author" content="adachi">
+						<meta name="description" content="havia algo estranho sobre ele.">
+						<meta name="google" content="notranslate">
+
+							<title>Selene, Éos</title>
+
+							<style>
+								body {
+								background-color: black;
+								background-size: 1920px 1080px;
+								text-align: center;
+								color: white;
+								}
+
+								input {
+								padding: 10px;
+								font-size: 18px;
+								}
+
+								button {
+								padding: 10px;
+								font-size: 18px;
+								cursor: pointer;
+								}
+
+								#resultado {
+								margin-top: 20px;
+								font-size: 25px;
+								}
+
+								.resposta-area {
+								position: absolute;
+								bottom: 30px;
+								left: 50%;
+								transform: translateX(-50%);
+								}
+							</style>
+
+						</head>
+
+	<body>
+
+		<!-- TÍTULO -->
+
+		<h1
+			data-pt="oganessônio"
+			data-en="oganesson">
+		</h1>
+
+
+		<!-- ÁREA DA RESPOSTA -->
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()">
+					Responder
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script>
+
+			<!-- IDIOMA ESCOLHIDO NO ENIGMA 1 -->
+
+			let idioma = localStorage.getItem("idioma");
+
+			if (!idioma) {
+			idioma = "pt";
+			}
+
+
+			<!-- NOME DA ABA DE ACORDO COM O IDIOMA -->
+
+			if (idioma === "pt") {
+
+			document.title = "Selene, Éos";
+
+			} else {
+
+			document.title = "Selene, Eos";
+
+			}
+
+
+			<!-- APLICAR IDIOMA -->
+
+			document.querySelectorAll("[data-pt]").forEach(function(elemento) {
+
+			elemento.innerHTML =
+			elemento.getAttribute("data-" + idioma);
+
+			});
+
+
+			<!-- ALTERAR PLACEHOLDER -->
+
+			let input = document.getElementById("resposta");
+
+			input.placeholder =
+			input.getAttribute("data-" + idioma + "-placeholder");
+
+
+			<!-- DEFINIR IDIOMA DA PÁGINA -->
+
+			document.documentElement.lang =
+			idioma === "pt" ? "pt-br" : "en";
+
+
+			<!-- VERIFICAR SE AS FASES ANTERIORES FORAM CONCLUÍDAS -->
+
+			if (
+			localStorage.getItem("Enigma1") !== "resolvido" ||
+			localStorage.getItem("Enigma2") !== "resolvido" ||
+			localStorage.getItem("Enigma3") !== "resolvido" ||
+			localStorage.getItem("Enigma4") !== "resolvido" ||
+			localStorage.getItem("Enigma5") !== "resolvido" ||
+			localStorage.getItem("Enigma6") !== "resolvido" ||
+			localStorage.getItem("Enigma7") !== "resolvido"
+			) {
+
+			window.location.href = "Enigma1.html";
+
+			}
+
+
+			
+function verificar() {
+
+    let resposta = document.getElementById("resposta")
+        .value
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[-\s]/g, "");
+
+
+    
+
+    if (
+        resposta === "gashelio" ||
+        resposta === "heliumgas"
+    ) {
+
+        localStorage.setItem("Enigma8", "resolvido");
+
+        window.location.href = "Enigma9.html";
+
+
+  
+
+    } else if (
+        resposta === "periodica" ||
+        resposta === "periodic"
+    ) {
+
+        if (idioma === "pt") {
+
+            document.getElementById("resultado").innerHTML =
+                "Está no caminho.";
+
+        } else {
+
+            document.getElementById("resultado").innerHTML =
+                "You are on the right path.";
+        }
+
+
+    
+    } else if (
+        resposta === "tabelaperiodica" ||
+        resposta === "periodictable"
+    ) {
+
+        if (idioma === "pt") {
+
+            document.getElementById("resultado").innerHTML =
+                "Está no caminho.";
+
+        } else {
+
+            document.getElementById("resultado").innerHTML =
+                "You are on the right path.";
+        }
+
+
+   
+
+    } else if (
+        resposta === "helio" ||
+        resposta === "helios"
+    ) {
+
+        if (idioma === "pt") {
+
+            document.getElementById("resultado").innerHTML =
+                "O Deus Hélio?";
+
+        } else {
+
+            document.getElementById("resultado").innerHTML =
+                "The god Helios?";
+        }
+
+
+ 
+
+    } else {
+
+        if (idioma === "pt") {
+
+            document.getElementById("resultado").innerHTML =
+                "Ne, Ar, Xe...";
+
+        } else {
+
+            document.getElementById("resultado").innerHTML =
+                "Ne, Ar, Xe...";
+        }
+    }
+}
+
+
+
+			<!-- ENTER -->
+
+			function teclaEnter(event) {
+
+			if (event.key === "Enter") {
+
+			verificar();
+
+			}
+
+			}
+
+		</script>
+
+	</body>
+
+</html>

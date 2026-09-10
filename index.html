@@ -1,0 +1,312 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta name="author" content="adachi">
+					<meta name="description" content="Era uma vez,">
+						<meta name="google" content="notranslate">
+							
+		
+						<title>7</title>
+
+						<style>
+							body {
+							background-color: black;
+							color: white;
+							text-align: center;
+							}
+
+							input {
+							padding: 10px;
+							font-size: 18px;
+							}
+
+							button {
+							padding: 10px;
+							font-size: 18px;
+							cursor: pointer;
+							}
+
+							#resultado {
+							margin-top: 20px;
+							font-size: 25px;
+							}
+
+							.Idiomas {
+							position: absolute;
+							top: 20px;
+							right: 20px;
+							}
+
+							.resposta-area {
+							position: absolute;
+							bottom: 30px;
+							left: 50%;
+							transform: translateX(-50%);
+							}
+
+							.bandeira {
+							background: none;
+							border: none;
+							padding: 5px;
+							cursor: pointer;
+							}
+
+							.bandeira img {
+							width: 60px;
+							height: 40px;
+							object-fit: cover;
+							}
+
+							.bandeira img:hover {
+							transform: scale(1.1);
+							}
+
+						</style>
+
+					</head>
+
+	<body>
+		<a href="https://github.com/Paullo-Marccos/Enigma-archive" target="_blank">
+  Ver código no GitHub
+</a>
+		
+		
+
+
+		<!-- BOTÕES DE IDIOMA -->
+
+		<div class="Idiomas">
+			<button onclick="mudarIdioma('pt')" class="bandeira">
+				<img src="brasil.jfif" alt="Português"></button>
+			
+			<button onclick="mudarIdioma('en')" class="bandeira">
+				<img src="eua.jfif" alt="English"></button>
+		</div>
+		
+		<!-- TÍTULO -->
+
+		<h1
+			id="titulo"
+			data-pt="vermelho, laranja, amarelo, verde, azul, anil e violeta"
+			data-en="red, orange, yellow, green, blue, indigo and violet">
+		</h1>
+
+		<!-- PORTUGUÊS -->
+
+		<div
+			id="portugues"
+			style="text-align: center; font-size: 23px; line-height: 1.8;">
+
+
+			<p>
+				Preparamos um pequeno enigma para você.<br>
+					<strong>Acha que consegue chegar ao fim?</strong>
+					<br>
+						Ou está apenas procurando algo para passar o tempo?
+						<br>
+
+							Pequenas pistas foram espalhadas pelo caminho.<br>
+								Algumas surgirão quando você errar.<br>
+            Outras estarão onde você menos espera.
+        </p>	
+
+			<p>
+				Se a névoa ficar densa demais,
+				<strong>existe um atalho.</strong>
+			</p>
+			<p>
+				Nós o deixamos no próprio <strong>código</strong>.<br>
+            Mas não conte com ele para sempre.
+        </p>
+			<p>
+				Cada fase possui uma chave.<br>
+            A próxima porta só será aberta quando a anterior for concluída.
+        </p>
+			<p>
+				Observe. Pense. Prossiga.<br>
+					<strong>Boa sorte.</strong>
+				</p>
+			<strong>A.D.A.C.H.I</strong>
+
+		</div>
+
+
+		<!-- INGLÊS -->
+
+		<div
+			id="ingles"
+			style="text-align: center; font-size: 23px; line-height: 1.8; display: none;"
+    >
+			<p>
+				We have prepared a small puzzle for you.<br>
+					<strong>Do you think you can reach the end?</strong>
+					<br>
+
+						Or are you just looking for something to pass the time?
+						<br>
+							Small clues have been scattered along the way.<br>
+								Some will appear when you make a mistake.<br>
+            Others will be where you least expect them.
+        </p>	
+
+			<p>
+				If the fog becomes too thick,
+				<strong>there is a shortcut.</strong>
+			</p>
+
+			<p>
+				We left it in the code itself, on purpose.<br>
+            But don't rely on it forever.
+        </p>
+
+			<p>
+				Each phase has a key.<br>
+            The next door will only open when the previous one is completed.
+        </p>
+
+			<p>
+				Observe. Think. Proceed.<br>
+					<strong>Good luck.</strong>
+				</p>
+
+			<strong>A.D.A.C.H.I</strong>
+			
+
+		</div>
+
+
+		<!-- ÁREA DA RESPOSTA -->
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+        >
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()"
+        >
+					Responder
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script>
+
+
+			<!--O IDIOMA SALVO--> 
+
+			let idiomaSalvo = localStorage.getItem("idioma");
+			if (idiomaSalvo) {
+			mudarIdioma(idiomaSalvo);
+			} else {
+			mudarIdioma("pt");
+			}
+
+
+			<!-- ALTERAR IDIOMA -->
+
+			function mudarIdioma(idioma) {
+
+			<!--Título e botão--> 
+
+			document.querySelectorAll("[data-pt]").forEach(function(elemento) {
+			elemento.innerHTML =
+			elemento.getAttribute("data-" + idioma);
+			});
+
+
+			<!-- Mostrar / esconder textos -->
+
+			if (idioma === "pt") {
+			document.getElementById("portugues").style.display = "block";
+			document.getElementById("ingles").style.display = "none";
+			}
+			
+			else {
+			document.getElementById("portugues").style.display = "none";
+			document.getElementById("ingles").style.display = "block";
+			}
+
+
+			<!-- Placeholder -->
+
+			let input = document.getElementById("resposta");
+			input.placeholder =
+			input.getAttribute("data-" + idioma + "-placeholder");
+
+
+			<!-- Idioma do HTML -->
+
+			document.documentElement.lang =
+			idioma === "pt" ? "pt-br" : "en";
+
+
+			<!-- Salvar idioma -->
+
+			localStorage.setItem("idioma", idioma);
+			}
+
+
+			<!-- VERIFICAR RESPOSTA -->
+
+			function verificar() {
+			let resposta = document.getElementById("resposta")
+			.value
+			.toLowerCase()
+			.trim()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/[-\s]/g, "")
+			.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+
+
+			<!-- RESPOSTAS CORRETAS -->
+
+			if (resposta === "arcoiris" || resposta === "rainbow") {
+			localStorage.setItem("Enigma1", "resolvido");
+			window.location.href = "Enigma2.html";
+			}
+
+
+			<!-- RESPOSTA ERRADA -->
+
+			else {
+			let idiomaAtual = localStorage.getItem("idioma");
+			if (idiomaAtual === "pt") {
+			document.getElementById("resultado").innerHTML =
+			"Você realmente achou que encontraria alguma coisa no fim? Que adorável";
+			} 
+			
+			else {
+			document.getElementById("resultado").innerHTML =
+			"You really thought you'd find something at the end? How adorable.";
+			}
+			}
+			}
+
+
+			<!-- ENTER PARA RESPONDER -->
+
+			function teclaEnter(event) {
+			if (event.key === "Enter") {
+			verificar();
+			}
+			}
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br" translate="no">
+
+	<head>
+
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+					<meta name="author" content="adachi">
+						<meta name="description" content="onde os homens acreditavam conhecer">
+							<meta name="google" content="notranslate">
+
+								<title>a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z</title>
+
+								<style>
+
+									body {
+									background-color: black;
+									text-align: center;
+									color: white;
+									}
+
+									input {
+									padding: 10px;
+									font-size: 18px;
+									}
+
+									button {
+									padding: 10px;
+									font-size: 18px;
+									cursor: pointer;
+									}
+
+									#resultado {
+									margin-top: 20px;
+									font-size: 25px;
+									}
+
+									.resposta-area {
+									position: absolute;
+									bottom: 30px;
+									left: 50%;
+									transform: translateX(-50%);
+									}
+
+								</style>
+
+							</head>
+	<!--Podem alterar esse enigma, acho que ele está um pouco dificil, nas primeiras fases nos foi informado que deveriam ser mais faceis, para o usuario se sentir confortavel e confiante. Deixe a criatividade bater mais 
+	pra frente. Tambem nao digitem ideias nessa fonte, lembrem-se o usuario vai ter acesso a essas informacoes. AnSi/ C.A-->
+
+	<body>
+
+		<h1
+			id="titulo"
+			data-pt="Um jabuti feliz viu o cão e a raposa correndo no parque."
+			data-en="The quick brown fox jumps over the lazy dog.">
+		</h1>
+
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()">
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script>
+
+			<!--PROTEÇÃO DO ENIGMA 3-->
+
+			if (
+			localStorage.getItem("Enigma1") !== "resolvido" ||
+			localStorage.getItem("Enigma2") !== "resolvido"
+			) {
+			window.location.href = "Enigma1.html";
+			}
+
+			<!--IDIOMA ESCOLHIDO NO ENIGMA 1-->
+
+			let idioma = localStorage.getItem("idioma");
+			if (!idioma) {
+			idioma = "pt";
+			}
+
+			<!--NOME DA ABA DE ACORDO COM O IDIOMA-->
+			
+			if (idioma === "pt") {
+			document.title =
+			"a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
+			} 
+			else {
+			document.title =
+			"a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z";
+			}
+
+			<!--APLICAR IDIOMA-->
+
+			document.querySelectorAll("[data-pt]").forEach(function(elemento) {
+			elemento.innerHTML =
+			elemento.getAttribute("data-" + idioma);
+			});
+			
+			<!--ALTERAR PLACEHOLDER-->
+
+			let input = document.getElementById("resposta");
+			input.placeholder =
+			input.getAttribute("data-" + idioma + "-placeholder");
+
+			<!--DEFINIR IDIOMA DA PÁGINA-->
+
+			document.documentElement.lang =
+			idioma === "pt" ? "pt-br" : "en";
+
+			<!--VERIFICAR RESPOSTA-->
+
+			function verificar() {
+			let resposta = document.getElementById("resposta")
+			.value
+			.toLowerCase()
+			.trim()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/[-\s]/g, "")
+			.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+
+			<!--RESPOSTA CORRETA-->
+
+			if (
+			resposta === "alfabeto" ||
+			resposta === "alphabet"
+			) {
+			localStorage.setItem("Enigma3", "resolvido");
+			window.location.href = "Enigma4.html";
+
+			}
+
+			<!--RESPOSTA QUASE CERTA-->
+
+			else if (
+			resposta === "letras" ||
+			resposta === "letters" ||
+			resposta === "lyrics"
+			) {
+
+			if (idioma === "pt") {
+			document.getElementById("resultado").innerHTML =
+			"Sim, mas não tem um nome pra elas?";
+			} 
+			
+			else {
+			document.getElementById("resultado").innerHTML =
+			"Yeah! Don't they have a name?";
+			}
+			}
+
+			<!--OUTRAS RESPOSTAS-->
+
+			else {
+			document.getElementById("resultado").innerHTML =
+			"26";
+			}
+			}
+
+			<!--ENTER PARA RESPONDER-->
+			
+			function teclaEnter(event) {
+			if (event.key === "Enter") {
+			verificar();
+			}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,422 @@
+﻿
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="C.A">
+    <meta name="description" content="Desde o primeiro dia,">
+    <meta name="google" content="notranslate">
+    <title id="titulo-aba" data-pt="1378" data-en="1378">1378</title>
+
+    <style>
+        #encerramento {
+            position: fixed;
+            inset: 0;
+            background: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            text-align: center;
+            z-index: 99999;
+        }
+
+        #texto-encerramento {
+            font-size: 42px;
+            line-height: 1.5;
+            text-align: center;
+            max-width: 90%;
+            margin: 0 auto;
+            transition: opacity 0.6s ease;
+        }
+
+        @media (max-width: 600px) {
+            #texto-encerramento {
+                font-size: 28px;
+            }
+        }
+
+        #barra-encerramento {
+            width: 300px;
+            height: 2px;
+            background: #222;
+            margin-top: 25px;
+            display: none;
+        }
+
+        #progresso-encerramento {
+            width: 0%;
+            height: 100%;
+            background: white;
+        }
+
+        #porcentagem-encerramento {
+            margin-top: 10px;
+            font-size: 12px;
+            display: none;
+        }
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            background-color: black;
+            color: rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            font-size: 20px;
+        }
+
+        .barra {
+            width: 350px;
+            height: 3px;
+            background-color: #222;
+            margin-top: 25px;
+        }
+
+        #progresso {
+            width: 0%;
+            height: 100%;
+            background-color: rgb(255, 255, 255);
+            transition: width 0.05s linear;
+        }
+
+        #porcentagem {
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        #encerrado {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: monospace;
+            text-align: center;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        #encerrado h2 { font-weight: normal; }
+        #encerrado code { font-size: 14px; color: #ffffff; }
+
+        body {
+            background-color: black;
+            background-size: 1920px 1080px;
+            text-align: center;
+            color: white;
+        }
+
+        input { padding: 10px; font-size: 18px; }
+        button { padding: 10px; font-size: 18px; cursor: pointer; }
+        #resultado { margin-top: 20px; font-size: 25px; }
+
+        .resposta-area {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="portugues" style="text-align: center; font-size: 24px; line-height: 1.8;">
+        <p>
+            A partir daqui, não haverá mais atalhos.<br>
+            O caminho fácil termina aqui.<br>
+            Tudo o que você viu até agora<br>
+            foi apenas preparação.<br>
+            <strong>Não procure na superfície.</strong><br>
+            A resposta não está onde a Web termina.<br>
+            Está onde ela começa a <strong>afundar</strong>.<br>
+            Algumas portas não possuem endereço.<br>
+            Algumas respostas não deveriam ser encontradas.<br>
+            E lembre-se:<br>
+            Quanto mais fundo você desce,<br>
+            mais difícil é saber quem está olhando.<br>
+            Você já deixou rastros.<br>
+            Talvez alguém já os tenha encontrado.<br>
+            Cada escolha revela algo sobre você.<br>
+            <strong>A.D.A.C.H.I</strong><br>
+            Deseja continuar?<br>
+        </p>
+    </div>
+
+    <div id="ingles" style="text-align: center; font-size: 24px; line-height: 1.8; display: none;">
+        <p>
+            At this point, there will be no more shortcuts.<br>
+            The easy path ends here.<br>
+            Everything you have seen so far<br>
+            was just preparation.<br>
+            <strong>Do not look on the surface.</strong><br>
+            The answer is not where the Web ends.<br>
+            It is where it begins to <strong>sink</strong>.<br>
+            Some doors have no address.<br>
+            Some answers should not be found.<br>
+            And remember:<br>
+            The deeper you go,<br>
+            the harder it is to know who is watching.<br>
+            You have already left traces.<br>
+            Maybe someone has already found them.<br>
+            Each choice reveals something about you.<br>
+            <strong>A.D.A.C.H.I</strong><br>
+            Do you wish to continue?<br>
+        </p>
+    </div>
+
+    <div class="button-container resposta-area">
+        <button id="continuar" data-pt="Sim" data-en="Yes">Sim</button>
+        <button id="botaoNao" data-pt="Não" data-en="No">Não</button>
+    </div>
+
+    <script>
+        const conexaoEncerrada = localStorage.getItem("conexaoEncerrada") === "true";
+
+        if (conexaoEncerrada) {
+            document.body.innerHTML = "";
+            document.body.style.backgroundColor = "black";
+            document.documentElement.style.backgroundColor = "black";
+        } else {
+            if (
+                localStorage.getItem("Enigma1") !== "resolvido" ||
+                localStorage.getItem("Enigma2") !== "resolvido" ||
+                localStorage.getItem("Enigma3") !== "resolvido" ||
+                localStorage.getItem("Enigma4") !== "resolvido" ||
+                localStorage.getItem("Enigma5") !== "resolvido" ||
+                localStorage.getItem("Enigma6") !== "resolvido" ||
+                localStorage.getItem("Enigma7") !== "resolvido" ||
+                localStorage.getItem("Enigma8") !== "resolvido" ||
+                localStorage.getItem("Enigma9") !== "resolvido" ||
+                localStorage.getItem("Enigma10") !== "resolvido"
+            ) {
+                window.location.href = "Enigma1.html";
+            }
+
+            // 2. BOTÃO SIM //
+
+            document.getElementById("continuar").onclick = function() {
+                const idiomaAtual = localStorage.getItem("idioma") || "pt";
+                const mensagensTransicaoPT = [
+                    "Então você decidiu continuar.",
+                    "Muito bem.",
+                    "Tudo o que veio antes serviu apenas para verificar se você chegaria até aqui.",
+                    "A partir deste ponto, as regras deixam de ser tão claras.",
+                    "Os próximos testes não foram feitos para serem simplesmente resolvidos.",
+                    "Foram feitos para serem compreendidos.",
+                    "Preste atenção.",
+                    "Observe o que não deveria estar ali.",
+                    "E, principalmente, não confie em tudo que lhe for mostrado.",
+                    "Você pediu para continuar.",
+                    "Agora, a escala muda.",
+                    "Esteja preparado.",
+                    "A.D.A.C.H.I"
+                ];
+                const mensagensTransicaoEN = [
+                    "So you have chosen to continue.",
+                    "Very well.",
+                    "Everything that came before was only meant to determine whether you would make it this far.",
+                    "From this point onward, the rules become less clear.",
+                    "The next trials were not made to be simply solved.",
+                    "They were made to be understood.",
+                    "Pay attention.",
+                    "Notice what should not be there.",
+                    "And above all, do not trust everything you are shown.",
+                    "You asked to continue.",
+                    "Now, the scale changes.",
+                    "Be prepared.",
+                    "A.D.A.C.H.I"
+                ];
+                const mensagensTransicao = idiomaAtual === "en"
+                    ? mensagensTransicaoEN
+                    : mensagensTransicaoPT;
+                mostrarSequenciaDeTransicao(mensagensTransicao);
+            };
+
+            function mostrarSequenciaDeTransicao(mensagens) {
+                document.body.innerHTML = `
+                    <div id="encerramento">
+                        <div id="texto-encerramento"></div>
+                    </div>
+                `;
+
+                const texto = document.getElementById("texto-encerramento");
+                const TEMPO_VISIVEL = 2200;
+                const TEMPO_FADE = 600;
+
+                function mostrarFrase(index) {
+                    if (index >= mensagens.length) {
+                        iniciarLoadingDoSim();
+                        return;
+                    }
+
+                    texto.style.opacity = 0;
+                    setTimeout(function() {
+                        texto.innerText = mensagens[index];
+                        texto.style.opacity = 1;
+                        setTimeout(function() {
+                            mostrarFrase(index + 1);
+                        }, TEMPO_VISIVEL);
+                    }, TEMPO_FADE);
+                }
+
+                mostrarFrase(0);
+            }
+
+            function iniciarLoadingDoSim() {
+                document.body.innerHTML = `
+                    <div id="loading">
+                        <div id="texto-loading">Estabelecendo conexão...</div>
+                        <div class="barra"><div id="progresso"></div></div>
+                        <div id="porcentagem">0%</div>
+                    </div>
+                `;
+
+                let progresso = 0;
+                const mensagens = [
+                    "Estabelecendo conexão...",
+                    "Verificando acesso...",
+                    "Localizando destino...",
+                    "Preparando conexão...",
+                    "Acesso autorizado.",
+                    "Prosseguindo..."
+                ];
+                let mensagemAtual = 0;
+
+                const intervalo = setInterval(function() {
+                    progresso += 1;
+                    document.getElementById("progresso").style.width = progresso + "%";
+                    document.getElementById("porcentagem").innerText = progresso + "%";
+
+                    if (progresso % 20 === 0 && mensagemAtual < mensagens.length - 1) {
+                        mensagemAtual++;
+                        document.getElementById("texto-loading").innerText = mensagens[mensagemAtual];
+                    }
+
+                    if (progresso >= 100) {
+                        clearInterval(intervalo);
+                        setTimeout(function() {
+                            window.location.href = "Enigma11.html";
+                        }, 800);
+                    }
+                }, 50);
+            }
+
+            // BOTÃO NÃO //
+            document.getElementById("botaoNao").onclick = function() {
+                const idiomaAtual = localStorage.getItem("idioma") || "pt";
+                const mensagensPT = [
+                    "Então você escolheu sair.", "Interessante.",
+                    "Nós já sabíamos que você faria isso.",
+                    "Sua decisão foi registrada antes mesmo de você tomá-la.",
+                    "Não tente voltar.", "Não há nada aqui para você agora.",
+                    "Você deixou rastros demais.", "E alguém já está seguindo eles.",
+                    "Talvez você nunca tenha estado sozinho.",
+                    "Talvez nunca tenha sido você quem estava observando.",
+                    "Agora, fique em silêncio.", "Não olhe para trás.",
+                    "Não há motivo para continuar.",
+                    "A.D.A.C.H.I"
+                ];
+                const mensagensEN = [
+                    "So you chose to leave.", "Interesting.",
+                    "We already knew you would do this.",
+                    "Your decision was recorded before you even made it.",
+                    "Do not try to come back.", "There is nothing here for you now.",
+                    "You left too many traces.", "And someone is already following them.",
+                    "Perhaps you were never alone.",
+                    "Perhaps you were never the one watching.",
+                    "Now, remain silent.", "Do not look behind you.",
+                    "There is no reason to continue.",
+                    "A.D.A.C.H.I"
+                ];
+                const textoEncerrando = idiomaAtual === "en"
+                    ? "Closing connection..."
+                    : "Encerrando conexão...";
+                const mensagens = idiomaAtual === "en" ? mensagensEN : mensagensPT;
+
+                document.body.innerHTML = "";
+                document.body.style.backgroundColor = "black";
+                document.body.style.color = "white";
+
+                const encerramento = document.createElement("div");
+                encerramento.id = "encerramento";
+                encerramento.innerHTML = `
+                    <div id="texto-encerramento"></div>
+                    <div id="barra-encerramento"><div id="progresso-encerramento"></div></div>
+                    <div id="porcentagem-encerramento">0%</div>
+                `;
+                document.body.appendChild(encerramento);
+
+                const texto = document.getElementById("texto-encerramento");
+                const barra = document.getElementById("barra-encerramento");
+                const progresso = document.getElementById("progresso-encerramento");
+                const porcentagem = document.getElementById("porcentagem-encerramento");
+                const TEMPO_VISIVEL = 2200;
+                const TEMPO_FADE = 600;
+
+                function mostrarFrase(index) {
+                    if (index >= mensagens.length) {
+                        iniciarLoading();
+                        return;
+                    }
+                    texto.style.opacity = 0;
+                    setTimeout(function() {
+                        texto.innerText = mensagens[index];
+                        texto.style.opacity = 1;
+                        setTimeout(function() { mostrarFrase(index + 1); }, TEMPO_VISIVEL);
+                    }, TEMPO_FADE);
+                }
+
+                function iniciarLoading() {
+                    texto.style.opacity = 0;
+                    setTimeout(function() {
+                        texto.innerText = textoEncerrando;
+                        texto.style.opacity = 1;
+                        barra.style.display = "block";
+                        porcentagem.style.display = "block";
+                        let progressoAtual = 0;
+                        const intervalo = setInterval(function() {
+                            progressoAtual++;
+                            progresso.style.width = progressoAtual + "%";
+                            porcentagem.innerText = progressoAtual + "%";
+                            if (progressoAtual >= 100) {
+                                clearInterval(intervalo);
+                                setTimeout(function() {
+                                    localStorage.setItem("conexaoEncerrada", "true");
+                                    document.body.innerHTML = "";
+                                    document.body.style.backgroundColor = "black";
+                                    document.documentElement.style.backgroundColor = "black";
+                                }, 1000);
+                            }
+                        }, 50);
+                    }, TEMPO_FADE);
+                }
+
+                mostrarFrase(0);
+            };
+
+            let idioma = localStorage.getItem("idioma");
+            if (!idioma) {
+                idioma = "pt";
+            }
+            document.getElementById("portugues").style.display = idioma === "pt" ? "block" : "none";
+            document.getElementById("ingles").style.display = idioma === "en" ? "block" : "none";
+            document.querySelectorAll("[data-pt]").forEach(function(elemento) {
+                elemento.innerHTML = elemento.getAttribute("data-" + idioma);
+            });
+            document.documentElement.lang = idioma === "pt" ? "pt-br" : "en";
+        }
+    </script>
+</body>
+</html>

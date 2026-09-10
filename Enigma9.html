@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+					<meta name="author" content="adachi">
+						<meta name="description" content="Seu pai, o rei,">
+							<meta name="google" content="notranslate">
+								<title>Veni, vidi, vici</title>
+
+								<style>
+
+									body {
+									background-color: black;
+									background-size: 1920px 1080px;
+									text-align: center;
+									color: white;
+									}
+
+									input {
+									padding: 10px;
+									font-size: 18px;
+									}
+
+									button {
+									padding: 10px;
+									font-size: 18px;
+									cursor: pointer;
+									}
+
+									#resultado {
+									margin-top: 20px;
+									font-size: 25px;
+									}
+
+									.resposta-area {
+									position: absolute;
+									bottom: 30px;
+									left: 50%;
+									transform: translateX(-50%);
+									}
+
+								</style>
+
+							</head>
+
+	<body>
+
+		</button>
+
+		<!-- TEXTO DO ENIGMA -->
+
+		<h1
+			data-pt="“Cãd edst, edgipcid, jb egícrxet egjstcit, ctb stkt, vjpgspg p epapkgp spsp fjpcsd ipa dqhtgkâcrxp awt htyp egtyjsxrxpa”"
+
+			data-en="“Iwtgtudgt, p egjstci egxcrt rpc ctxiwtg cdg hwdjas ztte wxh ldgs lwtc zttexcv xi ldjas qt wpgbuja id wxb”">
+		</h1>
+
+
+		<!-- ÁREA DA RESPOSTA -->
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+
+				data-pt-placeholder="Digite sua resposta"
+
+				data-en-placeholder="Enter your answer"
+
+				placeholder="Digite sua resposta"
+
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+
+					data-pt="Responder"
+
+					data-en="Answer"
+
+					onclick="verificar()">
+
+					Responder
+
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script>
+
+			<!-- IDIOMA ESCOLHIDO -->
+
+			let idioma = localStorage.getItem("idioma");
+
+			if (!idioma) {
+
+			idioma = "pt";
+
+			}
+
+
+			<!-- APLICAR IDIOMA NOS TEXTOS -->
+
+			document.querySelectorAll("[data-pt]").forEach(function(elemento) {
+
+			elemento.innerHTML =
+			elemento.getAttribute("data-" + idioma);
+
+			});
+
+
+			<!-- ALTERAR PLACEHOLDER -->
+
+			let input = document.getElementById("resposta");
+
+			input.placeholder =
+			input.getAttribute("data-" + idioma + "-placeholder");
+
+
+			<!-- ALTERAR TEXTO DO BOTÃO -->
+
+			let botao = document.getElementById("botao");
+
+			botao.innerHTML =
+			botao.getAttribute("data-" + idioma);
+
+
+			<!-- DEFINIR IDIOMA DA PÁGINA -->
+
+			document.documentElement.lang =
+			idioma === "pt" ? "pt-br" : "en";
+
+
+			<!-- VERIFICAR SE AS FASES ANTERIORES FORAM CONCLUÍDAS -->
+
+			if (
+			localStorage.getItem("Enigma1") !== "resolvido" ||
+			localStorage.getItem("Enigma2") !== "resolvido" ||
+			localStorage.getItem("Enigma3") !== "resolvido" ||
+			localStorage.getItem("Enigma4") !== "resolvido" ||
+			localStorage.getItem("Enigma5") !== "resolvido" ||
+			localStorage.getItem("Enigma6") !== "resolvido" ||
+			localStorage.getItem("Enigma7") !== "resolvido" ||
+			localStorage.getItem("Enigma8") !== "resolvido"
+			) {
+
+			window.location.href = "Enigma1.html";
+
+			}
+
+
+			<!-- VERIFICAR RESPOSTA -->
+
+			function verificar() {
+
+			let resposta = document.getElementById("resposta")
+			.value
+			.toLowerCase()
+			.trim()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/[-\s]/g, "")
+			.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+
+
+			<!-- RESPOSTA CORRETA EM PORTUGUÊS -->
+
+			let respostaCorretaPT =
+			"naopodeportantoumprincipeprudentenemdeveguardarapalavradadaquandotalobservancialhesejaprejudicial";
+
+
+			<!-- RESPOSTA CORRETA EM INGLÊS esse deu trabalho -->
+
+			let respostaCorretaEN =
+			"thereforeaprudentprincecanneithernorshouldkeephiswordwhenkeepingitwouldbeharmfultohim";
+
+
+			<!-- VERIFICAR AS DUAS RESPOSTAS -->
+
+			if (
+			resposta === respostaCorretaPT ||
+			resposta === respostaCorretaEN
+			) {
+
+			localStorage.setItem("Enigma9", "resolvido");
+
+			window.location.href = "Enigma10.html";
+
+			}
+
+
+			<!-- RESPOSTA ERRADA -->
+
+			else {
+
+			if (idioma === "pt") {
+
+			document.getElementById("resultado").innerHTML =
+			"Cuidado com os Idos de Março.";
+
+			}
+
+			else {
+
+			document.getElementById("resultado").innerHTML =
+			"Beware the Ides of March.";
+
+			}
+
+			}
+
+			}
+
+
+			<!-- ENTER -->
+
+			function teclaEnter(event) {
+
+			if (event.key === "Enter") {
+
+			verificar();
+
+			}
+
+			}
+
+		</script>
+
+	</body>
+
+</html>

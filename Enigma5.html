@@ -1,0 +1,387 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+	<head>
+
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta name="author" content="adachi">
+					<meta name="description" content="nasceu um príncipe chamado">
+						<meta name="google" content="notranslate">
+							
+						<title>Nietzsche</title>
+						
+
+						<style>
+
+							body {
+							background-color: black;
+							background-size: 1920px 1080px;
+							text-align: center;
+							color: white;
+							}
+
+							input {
+							width: 350px;
+							height: 50px;
+							padding: 10px;
+							font-size: 20px;
+							box-sizing: border-box;
+							}
+
+							button {
+							padding: 10px;
+							font-size: 18px;
+							cursor: pointer;
+							}
+
+							#resultado {
+							margin-top: 20px;
+							font-size: 25px;
+							}
+
+							.resposta-area {
+							position: absolute;
+							bottom: 30px;
+							left: 50%;
+							transform: translateX(-50%);
+							}
+
+							
+
+							.Idiomas {
+							position: absolute;
+							top: 20px;
+							left: 20px;
+							}
+
+							.bandeira {
+							background: none;
+							border: none;
+							padding: 5px;
+							cursor: pointer;
+							}
+
+							.bandeira img {
+							width: 60px;
+							height: 40px;
+							object-fit: cover;
+							}
+
+							.bandeira img:hover {
+							transform: scale(1.1);
+							}
+
+						</style>
+
+					</head>
+
+
+	<body>
+
+
+		<!-- BOTÕES DE IDIOMA -->
+
+	
+
+
+		<!-- ENIGMA -->
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="I = 1"
+				data-en="I = 1">
+			</span>
+
+		</p>
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="II = 11"
+				data-en="II = 11">
+			</span>
+
+		</p>
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="III = 111"
+				data-en="III = 111">
+			</span>
+
+		</p>
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="IV = 15"
+				data-en="IV = 15">
+			</span>
+
+		</p>
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="X = 10"
+				data-en="X = 10">
+			</span>
+
+		</p>
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="XVI = 1051"
+				data-en="XVI = 1051">
+			</span>
+
+		</p>
+
+		<p style="font-size:30px">
+
+			<span
+				data-pt="XVX = 101510"
+				data-en="XVX = 101510">
+			</span>
+
+		</p>
+
+
+		<!-- ÁREA DA RESPOSTA -->
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()">
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script>
+
+
+			<!-- VERIFICAR SE PASSOU PELOS ENIGMAS ANTERIORES -->
+
+			if (
+
+			localStorage.getItem("Enigma1") !== "resolvido" ||
+			localStorage.getItem("Enigma2") !== "resolvido" ||
+			localStorage.getItem("Enigma3") !== "resolvido" ||
+			localStorage.getItem("Enigma4") !== "resolvido"
+
+			) {
+
+			window.location.href = "Enigma1.html";
+
+			}
+
+
+			<!-- RECUPERAR IDIOMA SALVO -->
+
+			let idioma = localStorage.getItem("idioma");
+
+			if (!idioma) {
+
+			idioma = "pt";
+
+			}
+
+
+			<!-- APLICAR IDIOMA -->
+
+			mudarIdioma(idioma);
+
+
+			<!-- FUNÇÃO PARA MUDAR O IDIOMA -->
+
+			function mudarIdioma(idiomaEscolhido) {
+
+			idioma = idiomaEscolhido;
+
+			document.querySelectorAll("[data-pt]").forEach(function(elemento) {
+
+			elemento.innerHTML =
+			elemento.getAttribute("data-" + idioma);
+
+			});
+
+
+			<!-- ALTERAR PLACEHOLDER -->
+
+			let input = document.getElementById("resposta");
+
+			input.placeholder =
+			input.getAttribute("data-" + idioma + "-placeholder");
+
+
+			<!-- ALTERAR IDIOMA DO HTML -->
+
+			document.documentElement.lang =
+			idioma === "pt" ? "pt-br" : "en";
+
+
+			<!-- ALTERAR TÍTULO DA ABA -->
+
+			if (idioma === "pt") {
+
+			document.title = "Nietzsche";
+
+			} else {
+
+			document.title = "Nietzsche";
+
+			}
+
+
+			<!-- SALVAR IDIOMA -->
+
+			localStorage.setItem("idioma", idioma);
+
+			}
+
+
+			<!-- VERIFICAR RESPOSTA -->
+
+			function verificar() {
+
+			let resposta = document.getElementById("resposta")
+			.value
+			.toLowerCase()
+			.trim()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/[-\s]/g, "")
+			.replace(/\s+/g, "");
+
+
+			<!-- RESPOSTA CORRETA -->
+
+			if (resposta === "10110") {
+
+			localStorage.setItem("Enigma5", "resolvido");
+
+			window.location.href = "Enigma6.html";
+
+
+			<!-- PRIMEIRA PISTA -->
+
+			} else if (resposta === "1844") {
+
+			if (idioma === "pt") {
+
+			document.getElementById("resultado").innerHTML =
+			"Tá, mas e a dica no meio da tela?";
+
+			} else {
+
+			document.getElementById("resultado").innerHTML =
+			"Okay, but what about the clue in the middle of the screen?";
+
+			}
+
+
+			<!-- SEGUNDA PISTA -->
+
+			} else if (resposta === "iviiiiviv") {
+
+			if (idioma === "pt") {
+
+			document.getElementById("resultado").innerHTML =
+			"Calma, eu não colocaria algo tão complicado assim. Já tentou pensar em algo mais simples?";
+
+			} else {
+
+			document.getElementById("resultado").innerHTML =
+			"Calm down, I wouldn't put something that complicated here. Have you tried thinking of something simpler?";
+
+			}
+
+
+			<!-- TERCEIRA PISTA -->
+
+			} else if (resposta === "mdcccxliv") {
+
+			if (idioma === "pt") {
+
+			document.getElementById("resultado").innerHTML =
+			"De certa forma está certo, mas em que século o Nikola Tesla desenvolveu a corrente alternada?";
+
+			} else {
+
+			document.getElementById("resultado").innerHTML =
+			"In a way, that's correct, but in which century did Nikola Tesla develop alternating current?";
+
+			}
+
+
+			<!-- QUARTA PISTA -->
+
+			} else if (resposta === "xix") {
+
+			if (idioma === "pt") {
+
+			document.getElementById("resultado").innerHTML =
+			"XIX = ";
+
+			} else {
+
+			document.getElementById("resultado").innerHTML =
+			"XIX = ";
+
+			}
+
+
+			<!-- QUALQUER OUTRA RESPOSTA -->
+
+			} else {
+
+			if (idioma === "pt") {
+
+			document.getElementById("resultado").innerHTML =
+			"Acredito nos jovens à procura de caminhos novos abrindo espaços largos na vida. Creio na superação das incertezas deste fim de século.";
+
+			} else {
+
+			document.getElementById("resultado").innerHTML =
+			"I believe in young people searching for new paths, opening wide spaces in life. I believe in overcoming the uncertainties of this end of the century.";
+
+			}
+
+			}
+
+			}
+
+
+			<!-- ENTER PARA RESPONDER -->
+
+			function teclaEnter(event) {
+
+			if (event.key === "Enter") {
+
+			verificar();
+			}
+			}
+		</script>
+
+	</body>
+
+</html>
