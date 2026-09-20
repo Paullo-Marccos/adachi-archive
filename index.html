@@ -1,310 +1,486 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-br">
-	<head>
-		<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<meta name="author" content="adachi">
-					<meta name="description" content="Era uma vez,">
-						<meta name="google" content="notranslate">
-							
-		
-						<title>7</title>
-
-						<style>
-							body {
-							background-color: black;
-							color: white;
-							text-align: center;
-							}
-
-							input {
-							padding: 10px;
-							font-size: 18px;
-							}
-
-							button {
-							padding: 10px;
-							font-size: 18px;
-							cursor: pointer;
-							}
-
-							#resultado {
-							margin-top: 20px;
-							font-size: 25px;
-							}
-
-							.Idiomas {
-							position: absolute;
-							top: 20px;
-							right: 20px;
-							}
-
-							.resposta-area {
-							position: absolute;
-							bottom: 30px;
-							left: 50%;
-							transform: translateX(-50%);
-							}
-
-							.bandeira {
-							background: none;
-							border: none;
-							padding: 5px;
-							cursor: pointer;
-							}
-
-							.bandeira img {
-							width: 60px;
-							height: 40px;
-							object-fit: cover;
-							}
-
-							.bandeira img:hover {
-							transform: scale(1.1);
-							}
-
-						</style>
-
-					</head>
-
-	<body>
-		<a href="https://github.com/Paullo-Marccos/adachi-archive" target="_blank">
-	  Ver código no GitHub
-</a>
-		
-
-		<!-- BOTÕES DE IDIOMA -->
-
-		<div class="Idiomas">
-			<button onclick="mudarIdioma('pt')" class="bandeira">
-				<img src="brasil.jfif" alt="Português"></button>
-			
-			<button onclick="mudarIdioma('en')" class="bandeira">
-				<img src="eua.jfif" alt="English"></button>
-		</div>
-		
-		<!-- TÍTULO -->
-
-		<h1
-			id="titulo"
-			data-pt="vermelho, laranja, amarelo, verde, azul, anil e violeta"
-			data-en="red, orange, yellow, green, blue, indigo and violet">
-		</h1>
-
-		<!-- PORTUGUÊS -->
-
-		<div
-			id="portugues"
-			style="text-align: center; font-size: 23px; line-height: 1.8;">
-
-
-			<p>
-				Preparamos um pequeno enigma para você.<br>
-					<strong>Acha que consegue chegar ao fim?</strong>
-					<br>
-						Ou está apenas procurando algo para passar o tempo?
-						<br>
-
-							Pequenas pistas foram espalhadas pelo caminho.<br>
-								Algumas surgirão quando você errar.<br>
-            Outras estarão onde você menos espera.
-        </p>	
-
-			<p>
-				Se a névoa ficar densa demais,
-				<strong>existe um atalho.</strong>
-			</p>
-			<p>
-				Nós o deixamos no próprio <strong>código</strong>.<br>
-            Mas não conte com ele para sempre.
-        </p>
-			<p>
-				Cada fase possui uma chave.<br>
-            A próxima porta só será aberta quando a anterior for concluída.
-        </p>
-			<p>
-				Observe. Pense. Prossiga.<br>
-					<strong>Boa sorte.</strong>
-				</p>
-			<strong>A.D.A.C.H.I</strong>
-
-		</div>
-
-
-		<!-- INGLÊS -->
-
-		<div
-			id="ingles"
-			style="text-align: center; font-size: 23px; line-height: 1.8; display: none;"
-    >
-			<p>
-				We have prepared a small puzzle for you.<br>
-					<strong>Do you think you can reach the end?</strong>
-					<br>
-
-						Or are you just looking for something to pass the time?
-						<br>
-							Small clues have been scattered along the way.<br>
-								Some will appear when you make a mistake.<br>
-            Others will be where you least expect them.
-        </p>	
-
-			<p>
-				If the fog becomes too thick,
-				<strong>there is a shortcut.</strong>
-			</p>
-
-			<p>
-				We left it in the code itself, on purpose.<br>
-            But don't rely on it forever.
-        </p>
-
-			<p>
-				Each phase has a key.<br>
-            The next door will only open when the previous one is completed.
-        </p>
-
-			<p>
-				Observe. Think. Proceed.<br>
-					<strong>Good luck.</strong>
-				</p>
-
-			<strong>A.D.A.C.H.I</strong>
-			
-
-		</div>
-
-
-		<!-- ÁREA DA RESPOSTA -->
-
-		<div class="resposta-area">
-
-			<input
-				type="text"
-				id="resposta"
-				data-pt-placeholder="Digite sua resposta"
-				data-en-placeholder="Enter your answer"
-				placeholder="Digite sua resposta"
-				onkeydown="teclaEnter(event)"
-        >
-
-				<button
-					id="botao"
-					data-pt="Responder"
-					data-en="Answer"
-					onclick="verificar()"
-        >
-					Responder
-				</button>
-
-				<p id="resultado"></p>
-
-			</div>
-
-
-		<script>
-
-
-			<!--O IDIOMA SALVO--> 
-
-			let idiomaSalvo = localStorage.getItem("idioma");
-			if (idiomaSalvo) {
-			mudarIdioma(idiomaSalvo);
-			} else {
-			mudarIdioma("pt");
-			}
-
-
-			<!-- ALTERAR IDIOMA -->
-
-			function mudarIdioma(idioma) {
-
-			<!--Título e botão--> 
-
-			document.querySelectorAll("[data-pt]").forEach(function(elemento) {
-			elemento.innerHTML =
-			elemento.getAttribute("data-" + idioma);
-			});
-
-
-			<!-- Mostrar / esconder textos -->
-
-			if (idioma === "pt") {
-			document.getElementById("portugues").style.display = "block";
-			document.getElementById("ingles").style.display = "none";
-			}
-			
-			else {
-			document.getElementById("portugues").style.display = "none";
-			document.getElementById("ingles").style.display = "block";
-			}
-
-
-			<!-- Placeholder -->
-
-			let input = document.getElementById("resposta");
-			input.placeholder =
-			input.getAttribute("data-" + idioma + "-placeholder");
-
-
-			<!-- Idioma do HTML -->
-
-			document.documentElement.lang =
-			idioma === "pt" ? "pt-br" : "en";
-
-
-			<!-- Salvar idioma -->
-
-			localStorage.setItem("idioma", idioma);
-			}
-
-
-			<!-- VERIFICAR RESPOSTA -->
-
-			function verificar() {
-			let resposta = document.getElementById("resposta")
-			.value
-			.toLowerCase()
-			.trim()
-			.normalize("NFD")
-			.replace(/[\u0300-\u036f]/g, "")
-			.replace(/[-\s]/g, "")
-			.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
-
-
-			<!-- RESPOSTAS CORRETAS -->
-
-			if (resposta === "arcoiris" || resposta === "rainbow") {
-			localStorage.setItem("Enigma1", "resolvido");
-			window.location.href = "Enigma2.html";
-			}
-
-
-			<!-- RESPOSTA ERRADA -->
-
-			else {
-			let idiomaAtual = localStorage.getItem("idioma");
-			if (idiomaAtual === "pt") {
-			document.getElementById("resultado").innerHTML =
-			"Você realmente achou que encontraria alguma coisa no fim? Que adorável";
-			} 
-			
-			else {
-			document.getElementById("resultado").innerHTML =
-			"You really thought you'd find something at the end? How adorable.";
-			}
-			}
-			}
-
-
-			<!-- ENTER PARA RESPONDER -->
-
-			function teclaEnter(event) {
-			if (event.key === "Enter") {
-			verificar();
-			}
-			}
-
-		</script>
-	</body>
+<head>
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="author" content="adachi">
+                <meta name="description" content="Era uma vez,">
+                    <meta name="google" content="notranslate">
+
+                    <!-- 
+  Aos que buscam a verdade:
+  Este documento contém uma prova de conceito. 
+  A mente comum enxergará apenas marcação e sintaxe.
+  O observador atento encontrará a chave escondida na estrutura.
+
+  Não peça instruções. Decodifique.
+  Se você falhar em compreender a base, não deve avançar.
+
+  Há um enigma entre estas linhas. Apenas um solucionará.
+
+  A.D.A.C.H.I
+-->
+
+    <title>7</title>
+
+    <style>
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+            color: white;
+            font-family: monospace;
+        }
+
+        /* =========================
+           TELA DE INTRODUÇÃO
+        ========================= */
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            background: black;
+            color: white;
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 2vh 3vw;
+
+            transition: opacity 3s ease;
+        }
+
+        #intro-text {
+            width: 100%;
+            max-width: 1200px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            gap: 1.4vh;
+
+            font-size: clamp(13px, 1.55vw, 21px);
+            line-height: 1.5;
+
+            opacity: 0;
+            animation: aparecerIntro 1s ease forwards;
+        }
+
+        .intro-bloco {
+            opacity: 0;
+            text-align: center;
+
+            animation: aparecerBloco 1.2s ease forwards;
+        }
+
+        /* Cada bloco aparece com atraso incremental */
+        .intro-bloco:nth-child(1) { animation-delay: 0.6s; }
+        .intro-bloco:nth-child(2) { animation-delay: 2.2s; }
+        .intro-bloco:nth-child(3) { animation-delay: 3.8s; }
+        .intro-bloco:nth-child(4) { animation-delay: 5.4s; }
+        .intro-bloco:nth-child(5) { animation-delay: 7.0s; }
+        .intro-bloco:nth-child(6) { animation-delay: 8.6s; }
+        .intro-bloco:nth-child(7) { animation-delay: 10.2s; }
+        .intro-bloco:nth-child(8) { animation-delay: 11.8s; }
+
+        .intro-final {
+            font-size: clamp(16px, 2vw, 26px);
+            letter-spacing: 5px;
+            color: #e2e8f0;
+            margin-top: 1.5vh;
+        }
+
+        @keyframes aparecerIntro {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes aparecerBloco {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           ENIGMA
+        ========================= */
+
+        #conteudo {
+            opacity: 0;
+            transition: opacity 7s ease;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2vh 2vw;
+        }
+
+        body {
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 25px;
+        }
+
+        .Idiomas {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .resposta-area {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bandeira {
+            background: none;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .bandeira img {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+        }
+
+        .bandeira img:hover {
+            transform: scale(1.1);
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 600px) {
+            #intro-text {
+                font-size: 14px;
+                line-height: 1.5;
+                gap: 1.2vh;
+            }
+
+            .intro-final {
+                font-size: 18px;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         INTRODUÇÃO
+    ========================= -->
+
+    <div id="intro">
+        <div id="intro-text">
+
+            <div class="intro-bloco">
+                Você não deveria estar aqui.<br>
+                A luz não revela o que a mente se recusa a ver.
+            </div>
+
+            <div class="intro-bloco">
+                As perguntas esperam.<br>
+                Algumas foram deixadas para serem encontradas, outras para serem esquecidas.
+            </div>
+
+            <div class="intro-bloco">
+                O que você chama de enigma talvez nunca tenha sido feito para ter solução.
+            </div>
+
+            <div class="intro-bloco">
+                Não confie na ordem.<br>
+                O começo pode ser o fim.<br>
+                O irrelevante é a chave.
+            </div>
+
+            <div class="intro-bloco">
+                Observe. Pense. Questione.
+            </div>
+
+            <div class="intro-bloco">
+                Encontrar o fim é apenas retornar ao ponto de partida.
+            </div>
+
+            <div class="intro-bloco intro-final">
+                A.D.A.C.H.I
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================
+         CONTEÚDO DO ENIGMA
+    ========================= -->
+
+    <div id="conteudo">
+
+        <a href="https://github.com/Paullo-Marccos/adachi-archive" target="_blank">
+            Ver código no GitHub
+        </a>
+
+        <!-- BOTÕES DE IDIOMA -->
+
+        <div class="Idiomas">
+            <button type="button" onclick="mudarIdioma('pt')" class="bandeira">
+                <img src="brasil.jfif" alt="Português">
+            </button>
+
+            <button type="button" onclick="mudarIdioma('en')" class="bandeira">
+                <img src="eua.jfif" alt="English">
+            </button>
+        </div>
+
+        <!-- TÍTULO -->
+
+        <h1
+            id="titulo"
+            data-pt="vermelho, laranja, amarelo, verde, azul, anil e violeta"
+            data-en="red, orange, yellow, green, blue, indigo and violet">
+            vermelho, laranja, amarelo, verde, azul, anil e violeta
+        </h1>
+
+        <!-- PORTUGUÊS -->
+
+        <div id="portugues" style="text-align: center; font-size: 23px; line-height: 1.8;">
+            <p>
+                Preparamos um pequeno enigma para você.<br>
+                <strong>Acha que consegue chegar ao fim?</strong>
+                <br>
+                Ou está apenas procurando algo para passar o tempo?
+                <br>
+                Pequenas pistas foram espalhadas pelo caminho.<br>
+                Algumas surgirão quando você errar.<br>
+                Outras estarão onde você menos espera.
+            </p>
+
+            <p>
+                Se a névoa ficar densa demais,
+                <strong>existe um atalho.</strong>
+            </p>
+
+            <p>
+                Nós o deixamos no próprio <strong>código</strong>.<br>
+                Mas não conte com ele para sempre.
+            </p>
+
+            <p>
+                Cada fase possui uma chave.<br>
+                A próxima porta só será aberta quando a anterior for concluída.
+            </p>
+
+            <p>
+                Observe. Pense. Prossiga.<br>
+                <strong>Boa sorte.</strong>
+            </p>
+
+            <strong>A.D.A.C.H.I</strong>
+        </div>
+
+        <!-- INGLÊS -->
+
+        <div id="ingles" style="text-align: center; font-size: 23px; line-height: 1.8; display: none;">
+            <p>
+                We have prepared a small puzzle for you.<br>
+                <strong>Do you think you can reach the end?</strong>
+                <br>
+                Or are you just looking for something to pass the time?
+                <br>
+                Small clues have been scattered along the way.<br>
+                Some will appear when you make a mistake.<br>
+                Others will be where you least expect them.
+            </p>
+
+            <p>
+                If the fog becomes too thick,
+                <strong>there is a shortcut.</strong>
+            </p>
+
+            <p>
+                We left it in the code itself, on purpose.<br>
+                But don't rely on it forever.
+            </p>
+
+            <p>
+                Each phase has a key.<br>
+                The next door will only open when the previous one is completed.
+            </p>
+
+            <p>
+                Observe. Think. Proceed.<br>
+                <strong>Good luck.</strong>
+            </p>
+
+            <strong>A.D.A.C.H.I</strong>
+        </div>
+
+        <!-- ÁREA DA RESPOSTA -->
+
+        <div class="resposta-area">
+            <input
+                type="text"
+                id="resposta"
+                data-pt-placeholder="Digite sua resposta"
+                data-en-placeholder="Enter your answer"
+                placeholder="Digite sua resposta"
+                onkeydown="teclaEnter(event)"
+            >
+
+            <button
+                type="button"
+                id="botao"
+                data-pt="Responder"
+                data-en="Answer"
+                onclick="verificar()">
+                Responder
+            </button>
+
+            <p id="resultado"></p>
+        </div>
+
+    </div>
+
+    <script>
+        /* =========================
+           INTRODUÇÃO
+        ========================= */
+
+        window.addEventListener("load", function () {
+            /*
+               Último bloco (A.D.A.C.H.I) começa em 11.8s e dura 1.2s.
+               Termina em ~13s.
+
+               - 13s → termina toda a introdução
+               - +3s de espera → 16s começa o fade out
+               - Fade out dura 3s → 19s some completamente
+			   - lembrando que voce pode colocar o valor que quiser ok?
+            */
+
+            setTimeout(function () {
+                setTimeout(function () {
+                    document.getElementById("intro").style.opacity = "0";
+                    document.getElementById("conteudo").style.opacity = "1";
+
+                    setTimeout(function () {
+                        document.getElementById("intro").style.display = "none";
+                    }, 3000);
+                }, 3000);
+            }, 13500);
+        });
+
+        /* =========================
+           O IDIOMA SALVO
+        ========================= */
+
+        let idiomaSalvo = localStorage.getItem("idioma");
+
+        if (idiomaSalvo) {
+            mudarIdioma(idiomaSalvo);
+        } else {
+            mudarIdioma("pt");
+        }
+
+        /* =========================
+           ALTERAR IDIOMA
+        ========================= */
+
+        function mudarIdioma(idioma) {
+            document.querySelectorAll("[data-pt]").forEach(function (elemento) {
+                elemento.innerHTML = elemento.getAttribute("data-" + idioma);
+            });
+
+            if (idioma === "pt") {
+                document.getElementById("portugues").style.display = "block";
+                document.getElementById("ingles").style.display = "none";
+            } else {
+                document.getElementById("portugues").style.display = "none";
+                document.getElementById("ingles").style.display = "block";
+            }
+
+            let input = document.getElementById("resposta");
+            input.placeholder = input.getAttribute("data-" + idioma + "-placeholder");
+
+            document.documentElement.lang = idioma === "pt" ? "pt-br" : "en";
+
+            localStorage.setItem("idioma", idioma);
+        }
+
+        /* =========================
+           VERIFICAR RESPOSTA
+        ========================= */
+
+        function verificar() {
+            let resposta = document.getElementById("resposta")
+                .value
+                .toLowerCase()
+                .trim()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[-\s]/g, "")
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+
+            if (resposta === "arcoiris" || resposta === "rainbow") {
+                localStorage.setItem("Enigma1", "resolvido");
+                window.location.href = "Enigma2.html";
+            } else {
+                let idiomaAtual = localStorage.getItem("idioma");
+
+                if (idiomaAtual === "pt") {
+                    document.getElementById("resultado").innerHTML =
+                        "Você realmente achou que encontraria alguma coisa no fim? Que adorável";
+                } else {
+                    document.getElementById("resultado").innerHTML =
+                        "You really thought you'd find something at the end? How adorable.";
+                }
+            }
+        }
+
+        /* =========================
+           ENTER PARA RESPONDER
+        ========================= */
+
+        function teclaEnter(event) {
+            if (event.key === "Enter") {
+                verificar();
+            }
+        }
+    </script>
+
+</body>
 </html>
