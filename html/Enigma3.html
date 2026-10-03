@@ -1,0 +1,61 @@
+﻿<!-- 
+[LOG 08 — C.A.]
+A luz da minha casa piscou três vezes. Recebi um envelope pardo sem remetente.
+Dentro, havia um print da tela do meu computador no momento exato em que eu criava este arquivo HTML. Não seria mais facil me mandar um e-mail?
+-->
+<!DOCTYPE html>
+<html lang="pt-br" translate="no">
+
+	<head>
+
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta http-equiv="X-UA-Compatible" content="IE=edge">
+					<meta name="author" content="adachi">
+						<meta name="description" content="onde os homens acreditavam conhecer">
+							<meta name="google" content="notranslate">
+								<link rel="stylesheet" href="../css/Enigma3.css">
+
+
+								<title>a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z</title>
+
+
+	</head>
+	<!--Podem alterar esse enigma, acho que ele está um pouco dificil, nas primeiras fases nos foi informado que deveriam ser mais faceis, para o usuario se sentir confortavel e confiante. Deixe a criatividade bater mais 
+	pra frente. Tambem nao digitem ideias nessa fonte, lembrem-se o usuario vai ter acesso a essas informacoes. AnSi/ C.A-->
+
+	<body>
+
+		<h1
+			id="titulo"
+			data-pt="Um jabuti feliz viu o cão e a raposa correndo no parque."
+			data-en="The quick brown fox jumps over the lazy dog.">
+		</h1>
+
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()">
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script src="../java/Enigma3.js"></script>
+	</body>
+</html>

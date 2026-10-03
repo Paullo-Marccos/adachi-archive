@@ -1,0 +1,62 @@
+﻿<!-- 
+[LOG 04 — K.L.]
+Fui chamada pelo C.A. para auditar a rede do projeto. 
+Notei tráfego criptografado saindo do servidor para endereços IPs não mapeados toda vez que uma resposta é enviada.
+-->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+				<meta name="author" content="adachi">
+					<meta name="description" content="Bodhi">
+						<meta name="google" content="notranslate">
+						<link rel="stylesheet" href="../css/Enigma6.css">
+
+
+							<title>Ouça</title>
+		
+						</head>
+
+	<body>
+
+		<!-- ÁUDIO -->
+
+		<audio class="morsecode6" controls="">
+			<source src="../audio/morsecode6.wav" type="audio/wav">
+		</audio>
+
+
+		<!-- ÁREA DA RESPOSTA -->
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()">
+					Responder
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+
+
+		<script src="../java/Enigma6.js"></script>
+
+	</body>
+
+</html>

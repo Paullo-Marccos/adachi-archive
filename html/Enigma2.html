@@ -1,0 +1,64 @@
+﻿<!-- 
+  [LOG 09 — K.L.]
+  Tentei rastrear a origem do A.D.A.C.H.I. forçando um rastreamento reverso pela rede Tor.
+  A rota foi infectada no meio do caminho. O script dele interceptou meus pacotes, 
+  forçou um loop na minha própria tabela de roteamento e devolveu o sinal para a minha máquina.
+  No terminal, o último salto mostrou o meu próprio IP local...
+  
+  Mas tem algo errado. Ao contrário do S.S., eu NUNCA assinei o setup dele e jamais autorizei acesso remoto no meu sistema.
+  Então como ele fez isso?
+
+  [1 semana depois]
+  Foi aí que percebi. A vulnerabilidade não estava no meu SO. 
+  Estava no [DADOS_CORROMPIDOS_#404_TERMOS_CONTRATUAIS]
+  No módulo de "sincronização de repositório", havia uma biblioteca de compilação cruzada (zero-day) disfarçada.
+  Eu não dei permissão... o ambiente de desenvolvimento que usamos para subir o site abriu as portas por dentro. 
+  Ele não precisava da minha autorização. Ele já tinha o controle desde o primeiro commit. Estou fora.
+-->
+  <!DOCTYPE html>
+
+  <html lang="pt-br" translate="no">
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<meta name="author" content="adachi">
+					<meta name="description" content="há muito tempo, em uma terra">
+						<meta name="google" content="notranslate">
+							<link rel="stylesheet" href="../css/Enigma2.css">
+								<title>céu</title>
+	</head>
+						
+
+	<body>
+
+		<h1
+			id="titulo"
+			data-pt="estrelas"
+			data-en="stars">
+		</h1>
+
+
+		<div class="resposta-area">
+
+			<input
+				type="text"
+				id="resposta"
+				data-pt-placeholder="Digite sua resposta"
+				data-en-placeholder="Enter your answer"
+				placeholder="Digite sua resposta"
+				onkeydown="teclaEnter(event)"
+			>
+
+				<button
+					id="botao"
+					data-pt="Responder"
+					data-en="Answer"
+					onclick="verificar()">
+				</button>
+
+				<p id="resultado"></p>
+
+			</div>
+	</body>
+	<script src="../java/Enigma2.js"></script>
+</html>
