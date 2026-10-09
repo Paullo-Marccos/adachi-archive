@@ -79,7 +79,7 @@
 
             if (resposta === "arcoiris" || resposta === "rainbow") {
                 localStorage.setItem("Enigma1", "resolvido");
-                window.location.href = "Enigma2.html";
+                window.location.href = "html/Enigma2.html";
             } else {
                 let idiomaAtual = localStorage.getItem("idioma");
 
