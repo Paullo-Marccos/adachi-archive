@@ -77,10 +77,17 @@
                 .replace(/[-\s]/g, "")
                 .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
 
-            if (resposta === "arcoiris" || resposta === "rainbow") {
-                localStorage.setItem("Enigma1", "resolvido");
-                window.location.href = "html/Enigma2.html";
-            } else {
+            const caminho = window.location.pathname;
+
+if (resposta === "arcoiris" || resposta === "rainbow") {
+    localStorage.setItem("Enigma1", "resolvido");
+
+    if (caminho.includes("/html/")) {
+        window.location.href = "Enigma2.html";
+    } else {
+        window.location.href = "html/Enigma2.html";
+    }
+} else {
                 let idiomaAtual = localStorage.getItem("idioma");
 
                 if (idiomaAtual === "pt") {
